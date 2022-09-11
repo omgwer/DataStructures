@@ -1,20 +1,27 @@
-// Labs.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
+//21. В   некотором   компиляторе   ПАСКАЛя  текст  программы
+//включает примечания, выделенные  фигурными  скобками  '{', '}'
+//либо  парами  символов  '(*'  и  '*)'.Примечания  могут быть
+//вложенными друг в друга.Если примечание открыто знаком  '{',
+//то оно должно быть закрыто знаком '}'.Аналогично примечание,
+//начинающееся с символов '(*'  должно  заканчиваться  символами
+//'*)'.Требуется:
+//1) проверить правильность вложенности примечаний;
+//2) переписать   файл   с   исходным   текстом   так, чтобы
+//отсутствовала  вложенность  комментариев  при  сохранении   их
+//содержания  и  в  качестве  ограничивающих  символов  остались
+//только  фигурные  скобки.Учесть   случай, когда   символы
+//примечаний находятся в апострофах (10).
 
 #include <iostream>
 
-int main()
-{
-    std::cout << "Hello World!\n";
-}
 
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
+    std::string checkProgramTextString(std::string inputProgramText) {
+       array[strin] test;
+        return "";
+    }
 
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
+    int main()
+    {
+        bool error = false;
+        std::cout << "Hello World!\n";
+    }

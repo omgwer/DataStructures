@@ -24,6 +24,7 @@
     <ProjectGuid>{277c73bb-a7fc-4f6f-a7b0-382767134d58}</ProjectGuid>
     <RootNamespace>Labs</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>Lab1</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -127,7 +128,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CommentData.cpp" />
+    <ClCompile Include="Stack.cpp" />
+    <ClCompile Include="Handler.cpp" />
     <ClCompile Include="Labs.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CommentData.h" />
+    <ClInclude Include="Stack.h" />
+    <ClInclude Include="Handler.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,5 +1,5 @@
-#pragma once
 #include "CommentData.h"
+#include <string>
 
 using namespace std;
 
@@ -9,11 +9,11 @@ typedef struct _stackStructure
 	_stackStructure *next;
 } Stack, *PStack;
 
-void push( int numberOfString, int numberOfPositionInString );
+void push( int numberOfString, int numberOfPositionInString , string newCommentSymbol);
 
 CommentData pop();
 
-void lookAtHead();
+CommentData lookAtHead();
 
 void clear();
 

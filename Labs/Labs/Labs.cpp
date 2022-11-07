@@ -22,41 +22,63 @@
 
 using namespace std;
 
-const string host = "D:\\Study\\DataStructures\\Labs\\Labs\\_forTest";
+//const string host = "D:\\Study\\DataStructures\\Labs\\Labs\\_forTest";  //noteBook host
+const string host = "C:\\Games\\forTest";
+
+    string getCommentSymbol(string line, int symbolNumberInLine) {                
+        string test = line.substr(symbolNumberInLine, 1);
+        if (test == "{") {
+            return "{";
+        }
+        else if (test == "}") {
+            return "}";
+        }            
+        test = line.substr(symbolNumberInLine, 2);
+        if (test == "(*") {
+            return "(*";
+        }
+        else if (test == "*)") {
+            return "*)";
+        }
+        return "error";                
+    }
 
     void checkProgramText() {
         string line;
-        ifstream in( host + "\\test.txt" ); // Open file to Read        
-        ofstream out( host + "\\out.txt" ); // Open file to Write
+        ifstream in(host + "\\test.txt"); // Open file to Read        
+        ofstream out(host + "\\out.txt"); // Open file to Write
         out.clear();
         int lineNumber = 1;
 
+
         if (in.is_open()) {
-            while (getline(in, line)) {                
-                for (int i = 0; i < line.length(); i++) {
-                    switch (line[i]) {
-                    case '{':
-                        if (!isEmpty()) {
-
-                        }
-                        
-                        break;
-                    case '}':
-                        if (!isEmpty()) {
-                            pop();
-                        }
-                        else {
-                            ;
-                        }
-                        break;
-                    }                    
+            while (getline(in, line)) {
+                for (int symbolNumberInLine = 0; symbolNumberInLine < line.length(); symbolNumberInLine++) {
+                    string newCommentSymbol = getCommentSymbol(line, symbolNumberInLine);
+                    if (newCommentSymbol != "error")
+                        push(lineNumber, symbolNumberInLine, newCommentSymbol);
                 }
-
-                lineNumber++;
             }
+            lineNumber++;
         }
+    
+
+        while (!isEmpty()) {
+            CommentData newChar = pop();
+            cout 
+                << newChar.commentSymbol 
+                << " numberString = " 
+                << newChar.numberOfString 
+                << " numberOfPosition = " 
+                << newChar.numberOfPositionInString 
+                << endl;
+
+        }
+        cout << "endOfStack" << endl;
+
+
         in.close();
-        out.close();
+        out.close();        
     }
 
     void replaceTextAfterRunProgram() {
@@ -76,23 +98,10 @@ const string host = "D:\\Study\\DataStructures\\Labs\\Labs\\_forTest";
         in.close();
         out.close();
     }
-
-    void getErrorsToConsole() {
-        cout << "Program is not correct!" << endl;
-        while (!isEmpty()) {
-            try {
-                CommentData var = pop();
-                cout << var.numberOfString << " - " << var.numberOfPositionInString << endl;
-            }
-            catch (exception ex) {
-                cout << ex.what() << endl;
-            }            
-        }
-    }
   
     int main()
     {
         checkProgramText();
         replaceTextAfterRunProgram();
-        getErrorsToConsole();              
+        return 1;
     }

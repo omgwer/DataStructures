@@ -7,6 +7,10 @@ using namespace std;
 
 Stack *stackStartPtr = NULL;
 
+void init() {
+	stackStartPtr = NULL;
+}
+
 void push(int numberOfString, int numberOfPositionInString, string newCommentSymbol)
 {
 	Stack *current = new Stack();
@@ -44,5 +48,11 @@ CommentData lookAtHead() {
 }
 
 bool isEmpty() {
-	return ( & stackStartPtr == NULL ) ? true : false;
+	return ( stackStartPtr == NULL) ? true : false;
+}
+
+void clear() {
+	while (!isEmpty) {
+		pop();
+	}
 }

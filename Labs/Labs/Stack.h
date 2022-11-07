@@ -1,13 +1,16 @@
+#pragma once
 #include "CommentData.h"
 #include <string>
 
 using namespace std;
 
-typedef struct _stackStructure
+struct _stackStructure
 {
 	CommentData *commentData;
 	_stackStructure *next;
 } Stack, *PStack;
+
+void init();
 
 void push( int numberOfString, int numberOfPositionInString , string newCommentSymbol);
 

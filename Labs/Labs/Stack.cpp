@@ -1,11 +1,11 @@
-#include "CommentData.h";
+#include "CommentData.h"
 #include "Stack.h"
 #include <iostream>
 #include <string>
 
 using namespace std;
 
-Stack *stackStartPtr = NULL;
+Stack *stackStartPtr;
 
 void init() {
 	stackStartPtr = NULL;

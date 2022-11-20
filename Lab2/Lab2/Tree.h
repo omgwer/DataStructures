@@ -2,12 +2,13 @@
 #include <string>
 #include "ListElement.h"
 
-typedef struct _tree {
+typedef struct Tree {
 	std::string  name;
 	bool  isFolder;
-	_tree* father;
-	ListElement* test;
-	_tree() : father(nullptr), isFolder(false) {}
+	Tree* father;
+	struct ListElement* folders;
+	struct ListElement* files;
+	Tree() : father(nullptr), isFolder(false), folders(nullptr), files(nullptr) {}
 } Tree;
 
 void addElement(Tree);

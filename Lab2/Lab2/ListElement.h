@@ -2,11 +2,11 @@
 #include <string>
 #include "Tree.h"
 
-typedef struct _list {
+typedef struct ListElement {
 	Tree* current;
-	_list* next;
+	ListElement* next;
 
-	_list() : current(nullptr), next(nullptr) {}
+	ListElement() : current(nullptr), next(nullptr) {}
 } ListElement;
 
 void addElement(ListElement*, Tree*);

@@ -1,9 +1,9 @@
 #include <iostream>
 #include <string>
-#include "List.h"
+#include "ListElement.h"
 #include "Tree.h"
 
-void addElement(List* list, Tree* newTreeElement)
+void addElement(ListElement* list, Tree* newTreeElement)
 {
 	if (list->current == nullptr) {    // если список пустой, пишем в начало списка
 		list->current = newTreeElement;
@@ -14,12 +14,12 @@ void addElement(List* list, Tree* newTreeElement)
 	std::string newName = newTreeElement->name; // для сортировки вставкой нужно пройтись по существующему списку
 	bool isFind = false;
 
-	List* varPtr = list;             // указатель на текущий элемент списка, по которому проходит итерация
-	List* prevElementPtr = nullptr;  // указатель на предыдущий элемент списка
+	ListElement* varPtr = list;             // указатель на текущий элемент списка, по которому проходит итерация
+	ListElement* prevElementPtr = nullptr;  // указатель на предыдущий элемент списка
 
 	while (!isFind) {			
 		if (newName <= varPtr->current->name) { // если новое имя меньше чем текущее в списке,
-			List *newElement = new List;
+			ListElement *newElement = new ListElement;
 			newElement->current = newTreeElement;
 			newElement->next = varPtr;
 			if (prevElementPtr == nullptr) {	// если нужно вставить первый элемент списка	
@@ -32,7 +32,7 @@ void addElement(List* list, Tree* newTreeElement)
 			continue;
 		}		
 		if (varPtr->next == nullptr) {   // если список кончился, создаем новый элемент и записываем его в конец
-			List* newElement = new List;
+			ListElement* newElement = new ListElement;
 			newElement->current = newTreeElement;
 			newElement->next = nullptr;
 			varPtr->next = newElement;
@@ -44,6 +44,12 @@ void addElement(List* list, Tree* newTreeElement)
 	}
 }
 
-bool isEmpty(List* list) {
+bool isEmpty(ListElement* list) {
 	return list->current == nullptr;
+}
+
+Tree* getElement(ListElement *test, std::string)
+{
+	Tree* ListElement = new Tree;
+	return ListElement;
 }

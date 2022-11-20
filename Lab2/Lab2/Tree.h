@@ -1,13 +1,13 @@
 #pragma once
 #include <string>
-#include "ListElement.h"
+#include "List.h"
 
 typedef struct Tree {
 	std::string  name;
 	bool  isFolder;
 	Tree* father;
-	struct ListElement* folders;
-	struct ListElement* files;
+	struct List* folders;
+	struct List* files;
 	Tree() : father(nullptr), isFolder(false), folders(nullptr), files(nullptr) {}
 } Tree;
 

@@ -1,11 +1,11 @@
 #include <iostream>
 #include <string>
-#include "ListElement.h"
+#include "List.h"
 #include "Tree.h"
 
-void addElement(ListElement* list, Tree* newTreeElement)
+void addElement(List* list, Tree* newTreeElement)
 {
-	if (list->current == nullptr) {    // если список пустой, пишем в начало списка
+	if (list->current == nullptr) {				// если список пустой, пишем в начало списка
 		list->current = newTreeElement;
 		list->next = nullptr;
 		return;
@@ -14,12 +14,12 @@ void addElement(ListElement* list, Tree* newTreeElement)
 	std::string newName = newTreeElement->name; // для сортировки вставкой нужно пройтись по существующему списку
 	bool isFind = false;
 
-	ListElement* varPtr = list;             // указатель на текущий элемент списка, по которому проходит итерация
-	ListElement* prevElementPtr = nullptr;  // указатель на предыдущий элемент списка
+	List* varPtr = list;					// указатель на текущий элемент списка, по которому проходит итерация
+	List* prevElementPtr = nullptr;		// указатель на предыдущий элемент списка
 
 	while (!isFind) {			
 		if (newName <= varPtr->current->name) { // если новое имя меньше чем текущее в списке,
-			ListElement *newElement = new ListElement;
+			List *newElement = new List;
 			newElement->current = newTreeElement;
 			newElement->next = varPtr;
 			if (prevElementPtr == nullptr) {	// если нужно вставить первый элемент списка	
@@ -32,7 +32,7 @@ void addElement(ListElement* list, Tree* newTreeElement)
 			continue;
 		}		
 		if (varPtr->next == nullptr) {   // если список кончился, создаем новый элемент и записываем его в конец
-			ListElement* newElement = new ListElement;
+			List* newElement = new List;
 			newElement->current = newTreeElement;
 			newElement->next = nullptr;
 			varPtr->next = newElement;
@@ -44,12 +44,21 @@ void addElement(ListElement* list, Tree* newTreeElement)
 	}
 }
 
-bool isEmpty(ListElement* list) {
-	return list->current == nullptr;
-}
+//bool isEmpty(List* list) {
+//	return list->current == nullptr;
+//}
+//
+//Tree* getElement(List *list, std::string elementName)
+//{
+//	Tree* ListElement = new Tree;
+//	return ListElement;
+//}
 
-Tree* getElement(ListElement *test, std::string)
-{
-	Tree* ListElement = new Tree;
-	return ListElement;
+void printList(List* list) {
+	List* var = list;
+	while (var->next != nullptr) {
+		std::string  test = list->current->name;
+		std::cout << "name = " << list->current->name << std::endl;
+		var = var->next;
+ 	}
 }

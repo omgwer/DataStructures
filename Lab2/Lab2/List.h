@@ -1,20 +1,20 @@
 #pragma once
 #include <string>
+#include "Tree.h"
 
+struct List {
+	Tree *current;
+	List *next;
 
-struct List
-{
-	
-}
+	List() : current(nullptr), next(nullptr) {}
+};
 
-//void init();
-//
-//void push(int numberOfString, int numberOfPositionInString, string newCommentSymbol);
-//
-//CommentData pop();
-//
-//CommentData lookAtHead();
-//
-//void clear();
-//
-//bool isEmpty();
+void addElement(List, Tree);
+
+Tree getElement(List, std::string);
+
+void deleteElement(List, std::string);
+
+void clear(List);
+
+bool isEmpty(List);

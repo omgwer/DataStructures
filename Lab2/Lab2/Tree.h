@@ -1,10 +1,18 @@
 #pragma once
 #include <string>
-#include <List.h>
 
 struct Tree {
 	std::string  name;
 	bool  isFolder;
 	Tree *father;
-	List *childers;
+
+	//Tree() : father(nullptr), folders(nullptr), files(nullptr), isFolder(false) {}
 };
+
+void addElement(Tree);
+
+void removeElement(Tree);
+
+bool isEmpty();
+
+void clear();

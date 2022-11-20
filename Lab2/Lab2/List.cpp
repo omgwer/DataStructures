@@ -1,56 +1,49 @@
 #include <iostream>
 #include <string>
+#include "List.h"
+#include "Tree.h"
 
-//using namespace std;
-//
-//Stack *stackStartPtr;
-//
-//void init() {
-//	stackStartPtr = NULL;
-//}
-//
-//void push(int numberOfString, int numberOfPositionInString, string newCommentSymbol)
-//{
-//	Stack* current = new Stack();
-//	current->commentData = new CommentData();
-//	current->commentData->numberOfString = numberOfString;
-//	current->commentData->numberOfPositionInString = numberOfPositionInString;
-//	current->commentData->commentSymbol = newCommentSymbol;
-//	current->next = stackStartPtr;
-//	stackStartPtr = current;
-//}
-//
-//CommentData pop()
-//{
-//	if (isEmpty()) {
-//		throw exception("Stack is empty, check stack before pop!");
-//	}
-//
-//	CommentData varData;
-//	varData.numberOfPositionInString = stackStartPtr->commentData->numberOfPositionInString;
-//	varData.numberOfString = stackStartPtr->commentData->numberOfString;
-//	varData.commentSymbol = stackStartPtr->commentData->commentSymbol;
-//	_stackStructure* varPtr = stackStartPtr->next;
-//	delete stackStartPtr->commentData;  // delete Ptr to commentData
-//	delete stackStartPtr;               // delete Ptr to stack element
-//	stackStartPtr = varPtr;
-//	return varData;
-//}
-//
-//CommentData lookAtHead() {
-//	CommentData varData;
-//	varData.numberOfPositionInString = stackStartPtr->commentData->numberOfPositionInString;
-//	varData.numberOfString = stackStartPtr->commentData->numberOfString;
-//	varData.commentSymbol = stackStartPtr->commentData->commentSymbol;
-//	return varData;
-//}
-//
-//bool isEmpty() {
-//	return (stackStartPtr == NULL) ? true : false;
-//}
-//
-//void clear() {
-//	while (!isEmpty) {
-//		pop();
-//	}
-//}
+void addElement(List* list, Tree* newTreeElement)
+{
+	if (list->current == nullptr) {    // если список пустой, пишем в начало списка
+		list->current = newTreeElement;
+		list->next = nullptr;
+		return;
+	}
+
+	std::string newName = newTreeElement->name; // для сортировки вставкой нужно пройтись по существующему списку
+	bool isFind = false;
+
+	List* varPtr = list;             // указатель на текущий элемент списка, по которому проходит итерация
+	List* prevElementPtr = nullptr;  // указатель на предыдущий элемент списка
+
+	while (!isFind) {			
+		if (newName <= varPtr->current->name) { // если новое имя меньше чем текущее в списке,
+			List *newElement = new List;
+			newElement->current = newTreeElement;
+			newElement->next = varPtr;
+			if (prevElementPtr == nullptr) {	// если нужно вставить первый элемент списка	
+				list = newElement;   //ПЕРЕПИСЫВАЕМ начало списка, так как добавляется элемент в начало списка.				
+			}
+			else {
+				prevElementPtr->next = newElement;				
+			}	
+			isFind = true;
+			continue;
+		}		
+		if (varPtr->next == nullptr) {   // если список кончился, создаем новый элемент и записываем его в конец
+			List* newElement = new List;
+			newElement->current = newTreeElement;
+			newElement->next = nullptr;
+			varPtr->next = newElement;
+			isFind = true;
+			continue;
+		}
+		prevElementPtr = varPtr;   // записываем предыдущий элемент списка
+		varPtr = varPtr->next;	   // двигаемся по списку вправо
+	}
+}
+
+bool isEmpty(List* list) {
+	return list->current == nullptr;
+}

@@ -2,6 +2,6 @@
 #include <string>
 #include "Tree.h"
 
-Tree readFile(std::string inPath);
+Tree readFile(std::string);
 
-void writeFile(std::string outPath);
+void writeFile(Tree , std::string );

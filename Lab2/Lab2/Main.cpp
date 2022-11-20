@@ -36,14 +36,14 @@ int main() {
 	Tree* test2 = new Tree;
 	Tree* test3 = new Tree;
 
-	test1->name = "bbb";
-	test2->name = "aaa";
+	test1->name = "aaa";
+	test2->name = "bbb";
 	test3->name = "ccc";
 
 
+	addElement(newTestList, test1);
+	addElement(newTestList, test2);
 	addElement(newTestList, test3);
-	//addElement(newTestList, test2);
-	//addElement(newTestList, test1);
 	
 	printList(newTestList);
 

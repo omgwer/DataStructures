@@ -23,9 +23,9 @@ void addElement(List* list, Tree* newTreeElement)
 			newElement->current = newTreeElement;
 			newElement->next = varPtr;
 			if (prevElementPtr == nullptr) {	// если нужно вставить первый элемент списка	
-				list = newElement;   //ПЕРЕПИСЫВАЕМ начало списка, так как добавляется элемент в начало списка.				
+				list = newElement;   //ПЕРЕПИСЫВАЕМ начало списка, так как добавляется элемент в начало списка.					
 			}
-			else {
+			else { 
 				prevElementPtr->next = newElement;				
 			}	
 			isFind = true;
@@ -57,9 +57,8 @@ void addElement(List* list, Tree* newTreeElement)
 void printList(List* list) {
 	List* var = list;
 	while (var->next != nullptr) {
-		std::string  test = list->current->name;
-		std::cout << "name = " << list->current->name << std::endl;
+		std::cout << "name = " << var->current->name << std::endl;
 		var = var->next;
  	}
-	std::cout << "name = " << list->current->name << std::endl;
+	std::cout << "name = " << var->current->name << std::endl;
 }

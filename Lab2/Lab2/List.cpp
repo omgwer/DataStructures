@@ -61,4 +61,5 @@ void printList(List* list) {
 		std::cout << "name = " << list->current->name << std::endl;
 		var = var->next;
  	}
+	std::cout << "name = " << list->current->name << std::endl;
 }

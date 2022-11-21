@@ -4,7 +4,7 @@
 #include "Tree.h"
 
 void addElement(List* list, Tree* newTreeElement)
-{
+{	
 	if (list->current == nullptr) {				// если список пустой, пишем в начало списка
 		list->current = newTreeElement;
 		list->next = nullptr;
@@ -15,19 +15,21 @@ void addElement(List* list, Tree* newTreeElement)
 	bool isFind = false;
 
 	List* varPtr = list;					// указатель на текущий элемент списка, по которому проходит итерация
-	List* prevElementPtr = nullptr;		// указатель на предыдущий элемент списка
+	List* prevElementPtr = nullptr;				// указатель на предыдущий элемент списка
 
 	while (!isFind) {			
 		if (newName <= varPtr->current->name) { // если новое имя меньше чем текущее в списке,
 			List *newElement = new List;
 			newElement->current = newTreeElement;
-			newElement->next = varPtr;
-			if (prevElementPtr == nullptr) {	// если нужно вставить первый элемент списка	
-				list = newElement;   //ПЕРЕПИСЫВАЕМ начало списка, так как добавляется элемент в начало списка.					
+			newElement->next = varPtr1;
+			if (prevElementPtr != nullptr) {	
+				prevElementPtr->next = newElement;
 			}
-			else { 
-				prevElementPtr->next = newElement;				
-			}	
+			else {		
+				List varPtr1 = *list;           // если нужно вставить первый элемент списка				
+				newElement->next = &varPtr1;
+				(*list) = *newElement;
+			}
 			isFind = true;
 			continue;
 		}		
@@ -56,6 +58,9 @@ void addElement(List* list, Tree* newTreeElement)
 
 void printList(List* list) {
 	List* var = list;
+	if (var->current == nullptr) {
+		return;
+	}
 	while (var->next != nullptr) {
 		std::cout << "name = " << var->current->name << std::endl;
 		var = var->next;

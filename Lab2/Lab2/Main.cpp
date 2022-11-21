@@ -35,15 +35,17 @@ int main() {
 	Tree* test1 = new Tree;
 	Tree* test2 = new Tree;
 	Tree* test3 = new Tree;
+	Tree* test4 = new Tree;
 
 	test1->name = "aaa";
 	test2->name = "bbb";
 	test3->name = "ccc";
-
+	test4->name = "ddd";
 
 	addElement(newTestList, test1);
-	addElement(newTestList, test2);
-	addElement(newTestList, test3);
+	addElement(newTestList, test1);
+	addElement(newTestList, test1);
+	//addElement(newTestList, test1);
 	
 	printList(newTestList);
 

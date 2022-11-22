@@ -38,8 +38,8 @@ int main() {
 	Tree* test4 = new Tree;
 
 	test1->name = "aaa";
-	test2->name = "bbb";
-	test3->name = "ccc";
+	test2->name = "ccc";
+	test3->name = "bbb";
 	test4->name = "ddd";
 
 	addElement(newTestList, test1);

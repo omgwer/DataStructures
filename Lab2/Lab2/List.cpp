@@ -18,15 +18,18 @@ void addElement(List* list, Tree* newTreeElement)
 	List* prevElementPtr = nullptr;				// указатель на предыдущий элемент списка
 
 	while (!isFind) {			
-		if (newName <= varPtr->current->name) { // если новое имя меньше чем текущее в списке,
-			List *newElement = new List;
-			newElement->current = newTreeElement;
-			newElement->next = varPtr;
-			if (prevElementPtr != nullptr) {	
+		if (newName <= varPtr->current->name) { // если новое имя меньше чем текущее в списке,			
+			if (prevElementPtr != nullptr) {
+				List* newElement = new List;
+				newElement->current = newTreeElement;
+				newElement->next = varPtr;
 				prevElementPtr->next = newElement;
 			}
 			else {
-				list = newElement;				
+				List* newElement = new List;
+				newElement->current = newTreeElement;
+				newElement->next = list;
+				*list = *newElement;				
 			}
 			isFind = true;
 			continue;

@@ -20,3 +20,22 @@ void addElement(List* list, Tree* newTreeElement);
 //bool isEmpty(List* list);
 
 void printList(List* list);
+
+/*typedef struct List {
+	ListNode* first;
+};
+
+typedef struct ListNode {
+	ListNode* next;
+};
+
+void addElement(List* list, Tree* newTreeElement)
+{
+	/* ... */
+//	if (prevElementPtr != nullptr) {
+//		prevElementPtr->next = newElement;
+//	}
+//	else {
+//		list->first = newElement;
+//	}
+//}*/

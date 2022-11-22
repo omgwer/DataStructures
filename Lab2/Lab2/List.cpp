@@ -21,14 +21,12 @@ void addElement(List* list, Tree* newTreeElement)
 		if (newName <= varPtr->current->name) { // если новое имя меньше чем текущее в списке,
 			List *newElement = new List;
 			newElement->current = newTreeElement;
-			newElement->next = varPtr1;
+			newElement->next = varPtr;
 			if (prevElementPtr != nullptr) {	
 				prevElementPtr->next = newElement;
 			}
-			else {		
-				List varPtr1 = *list;           // если нужно вставить первый элемент списка				
-				newElement->next = &varPtr1;
-				(*list) = *newElement;
+			else {
+				list = newElement;				
 			}
 			isFind = true;
 			continue;

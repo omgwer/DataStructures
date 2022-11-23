@@ -1,9 +1,9 @@
 #include <iostream>
 #include <string>
 #include "List.h"
-#include "Tree.h"
+#include "Node.h"
 
-void addElement(Tree) {}
+void addElement(Node) {}
 
 void removeElement() {
 }

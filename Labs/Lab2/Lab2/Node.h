@@ -2,16 +2,16 @@
 #include <string>
 #include "List.h"
 
-typedef struct Tree {
+typedef struct Node {
 	std::string  name;
 	bool  isFolder;
-	Tree* father;
+	Node* parent;
 	struct List* folders;
 	struct List* files;
-	Tree() : father(nullptr), isFolder(false), folders(nullptr), files(nullptr) {}
-} Tree;
+	Node() : parent(nullptr), isFolder(false), folders(nullptr), files(nullptr) {}
+} Node;
 
-void addElement(Tree);
+void addElement(Node*);
 
 void removeElement();
 

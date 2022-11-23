@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{5999ece6-4de0-4369-86cb-5f95a382ffba}</ProjectGuid>
-    <RootNamespace>Lab2</RootNamespace>
+    <ProjectGuid>{67af2e7a-52a6-403b-8d16-43991e3fc00f}</ProjectGuid>
+    <RootNamespace>Project1</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -127,19 +127,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="FilesHandler.cpp" />
-    <ClCompile Include="Main.cpp" />
-    <ClCompile Include="List.cpp" />
-    <ClCompile Include="Tree.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="FilesHandler.h" />
     <ClInclude Include="List.h" />
-    <ClInclude Include="Tree.h" />
+    <ClInclude Include="ListElement.h" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="Files\in.txt" />
-    <Text Include="Files\out.txt" />
+    <ClCompile Include="List.cpp" />
+    <ClCompile Include="ListElement.cpp" />
+    <ClCompile Include="main.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

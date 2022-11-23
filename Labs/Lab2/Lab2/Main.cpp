@@ -27,25 +27,25 @@ Pointer father, down, right
 */
 
 #include <iostream>
-#include "Tree.h"
 #include "List.h"
+#include "Node.h"
 
 int main() {
 	List* newTestList = new List;
-	Tree* test1 = new Tree;
-	Tree* test2 = new Tree;
-	Tree* test3 = new Tree;
-	Tree* test4 = new Tree;
+	Node* test1 = new Node;
+	Node* test2 = new Node;
+	Node* test3 = new Node;
+	Node* test4 = new Node;
 
-	test1->name = "aaa";
-	test2->name = "ccc";
-	test3->name = "bbb";
-	test4->name = "ddd";
+	test1->name = "a";
+	test2->name = "b";
+	test3->name = "c";
+	test4->name = "d";
 
+	addElement(newTestList, test2);
+	addElement(newTestList, test3);
 	addElement(newTestList, test1);
-	addElement(newTestList, test1);
-	addElement(newTestList, test1);
-	//addElement(newTestList, test1);
+//	addElement(newTestList, test1);
 	
 	printList(newTestList);
 

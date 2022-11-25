@@ -10,7 +10,9 @@ typedef struct List {
 
 void addElement(List*, Node*);
 
-//Tree* getElement(List* list, std::string elementName);
+Node* getElement(List*, std::string);
+
+bool isExist(List*, std::string);
 
 void deleteElement(List*, std::string);
 

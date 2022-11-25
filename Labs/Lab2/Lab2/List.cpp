@@ -10,7 +10,7 @@ void addElement(List* list, Node* newNodeElement)
 	newElement->node = newNodeElement;
 
 	if (isEmpty(list)) {				          // если список пустой, пишем в начало списка
-		newElement->next = nullptr;
+		newElement->next = nullptr;		
 		list->next = newElement;
 		return;
 	}	
@@ -40,7 +40,7 @@ void addElement(List* list, Node* newNodeElement)
 }
 
 void deleteElement(List* list, std::string elementName) {
-	if (isEmpty(list)) {
+	if (isEmpty(list) || isEmpty(list->next)) {
 		return;
 	}
 	ListElement* iterableListElement = list->next;
@@ -90,7 +90,7 @@ bool isEmpty(ListElement* listElement) {
 void printList(List* list) {
 	ListElement* listElement = list->next;	
 	while (!isEmpty(listElement)) {
-		std::cout << "name = " << listElement->node->name << std::endl;
+		std::cout << "\t " << listElement->node->name << std::endl;
 		listElement = listElement->next;
  	}
 }

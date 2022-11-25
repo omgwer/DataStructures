@@ -5,7 +5,7 @@ typedef struct List {
 	ListElement* next;
 
 	List() : next(nullptr) {}
-};
+} List;
 
 
 void addElement(List*, Node*);

@@ -5,8 +5,12 @@ D
 ..tests
 ...helpme
 ...today.helps
+.kek
 .test
 ..bigdata
 ..data
 ...wow.exe
+.wowfindall
+..adsad.prg
+...efim.jpg
 .games.exe

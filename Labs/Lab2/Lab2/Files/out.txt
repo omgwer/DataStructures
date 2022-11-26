@@ -1,0 +1,12 @@
+D
+.games
+..secomd
+...second.txt
+..tests
+...helpme
+...today.helps
+.test
+..bigdata
+..data
+...wow.exe
+.games.exe

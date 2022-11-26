@@ -12,10 +12,6 @@
 /*
 1) в текстовом файле расписываешь структуру формата:
 C
-.Documents
-..doc.doc
-.Users
-..Alexey
 */
 
 #include <iostream>
@@ -23,11 +19,13 @@ C
 #include "Node.h"
 #include "FileHandler.h"
 
-int main() {
-	std::string textFile = "E:\\Projects\\DataStructures\\Labs\\Lab2\\Lab2\\Files\\in.txt";
-	Node* node = readFile(textFile);
-	
-	printNode(node);
+std::string host = "E:\\Projects\\DataStructures\\Labs\\Lab2\\Lab2\\Files";
+std::string inFile = host + "\\in.txt";
+std::string outFile = host + "\\out.txt";
 
-	return 1;	
+int main() {	
+	Node* node = readFile(inFile);
+	writeFile(node, outFile);
+
+	return 1337;	
 }

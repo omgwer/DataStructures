@@ -147,23 +147,23 @@ FileManager* FileManager::readCommand()
 FileManager* FileManager::drawHelp() {
 	std::cout << "\033[2J\033[1;1H";
 	std::cout << "                  FILES MANAGER v0.1" << std::endl;
-	std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
+	std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
 	std::cout << std::endl << "  Commands :" << std::endl;
-	std::cout << "    cd {directory name} : change directory" << std::endl;
-	std::cout << "    md {directory name} : make directory" << std::endl;
-	std::cout << "    rd {directory name} : remove directory" << std::endl;
+	std::cout << "    cd {directory name}                      : change directory" << std::endl;
+	std::cout << "    md {directory name}                      : make directory" << std::endl;
+	std::cout << "    rd {directory name}                      : remove directory" << std::endl;
 	std::cout << "    ed {directory name} {new directory name} : edit directory name" << std::endl;
-	std::cout << "    mf {file name} : make file" << std::endl;
-	std::cout << "    rf {file name} : remove file" << std::endl;	
-	std::cout << "    ef {file name} : edit file name" << std::endl;	
-	std::cout << "    save : save input changes" << std::endl;	
-	std::cout << "    exit : close this app" << std::endl;	
-	std::cout << std::endl << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
+	std::cout << "    mf {file name}                           : make file" << std::endl;
+	std::cout << "    rf {file name}                           : remove file" << std::endl;	
+	std::cout << "    ef {file name} {new file name}           : edit file name" << std::endl;	
+	std::cout << "    save                                     : save input changes" << std::endl;	
+	std::cout << "    exit                                     : close this app" << std::endl;	
+	std::cout << std::endl << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
 	return this;
 }
 
 FileManager* FileManager::drawNode() {
 	printNode(variableNode);
-	std::cout << std::endl << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
+	std::cout << std::endl << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
 	return this;
 }

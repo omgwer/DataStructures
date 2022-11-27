@@ -127,7 +127,21 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Graph.cpp" />
+    <ClCompile Include="GraphElement.cpp" />
+    <ClCompile Include="LinkNode.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="MaxWeightFinder.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Files\in.txt" />
+    <Text Include="Files\out.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Graph.h" />
+    <ClInclude Include="GraphElement.h" />
+    <ClInclude Include="LinkNode.h" />
+    <ClInclude Include="MaxWeightFinder.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

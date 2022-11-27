@@ -72,6 +72,23 @@ FileManager* FileManager::readCommand()
 			std::cout << "  Error! Directory is not found!!!" << std::endl;
 		}
 	}
+	else if (command == "ed") {
+		std::string newName = "";
+		std::cin >> newName;
+		if (newName == "") {
+			std::cout << "   Error! new name is empty!!!" << std::endl;
+		} else if (isExist(variableNode->folders, newName)) {
+			std::cout << "  Error! Directory with new name is exits!!!" << std::endl;
+		}
+		else if (!isExist(variableNode->folders, parameter)) {
+			std::cout << "  Error! Directory with current name is not exist exits!!!" << std::endl;
+		}
+		else {
+			Node* editNode = getElement(variableNode->folders, parameter);
+			editNode->name = newName;
+			return this;
+		}
+	}
 	else if (command == "mf") {
 		if (parameter.find(".") == -1) {
 			std::cout << "  Error! File is not valid (need extenshion)" << std::endl;			
@@ -95,6 +112,27 @@ FileManager* FileManager::readCommand()
 			std::cout << "  Error! File is not found!!!" << std::endl;
 		}
 	}
+	else if (command == "ef") {
+		std::string newName = "";
+		std::cin >> newName;
+		if (newName == "") {
+			std::cout << "   Error! new name is empty!!!" << std::endl;
+		}
+		if (newName.find(".") == -1) {
+			std::cout << "  Error! new file name is not valid (need extenshion)" << std::endl;
+		}
+		else if (isExist(variableNode->files, newName)) {
+			std::cout << "  Error! files with new name is exits!!!" << std::endl;
+		}
+		else if (!isExist(variableNode->files, parameter)) {
+			std::cout << "  Error! file is not exist!!!" << std::endl;
+		}
+		else {
+			Node* editNode = getElement(variableNode->files, parameter);
+			editNode->name = newName;
+			return this;
+		}
+	}
 	else if (command == "save") {
 		writeFile(rootNode, outFilePath);
 		std::cout << "  Output file will be saved!!" << std::endl;
@@ -114,8 +152,10 @@ FileManager* FileManager::drawHelp() {
 	std::cout << "    cd {directory name} : change directory" << std::endl;
 	std::cout << "    md {directory name} : make directory" << std::endl;
 	std::cout << "    rd {directory name} : remove directory" << std::endl;
+	std::cout << "    ed {directory name} {new directory name} : edit directory name" << std::endl;
 	std::cout << "    mf {file name} : make file" << std::endl;
 	std::cout << "    rf {file name} : remove file" << std::endl;	
+	std::cout << "    ef {file name} : edit file name" << std::endl;	
 	std::cout << "    save : save input changes" << std::endl;	
 	std::cout << "    exit : close this app" << std::endl;	
 	std::cout << std::endl << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;

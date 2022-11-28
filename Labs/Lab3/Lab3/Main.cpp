@@ -4,8 +4,19 @@
 //максимальный   груз, который  можно  провести  между   двумя
 //указанными городам(10).
 
+/*
+ Предлагаю хранить матрицу в 2х мерном массиве
+*/
+
 #include "MaxWeightFinder.h"
+#include <vector>
+
+using namespace std;
 
 int main() {
-	return 1337;
+
+	vector<vector<int>> matrix;
+	
+
+	return 1;
 }

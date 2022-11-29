@@ -9,6 +9,8 @@ private:
 	Node* variableNode;
 	Node* rootNode;
 	bool isRunProgram;
+	Node* buffer;
+	bool isCut;
 public:
 	FileManager(std::string, std::string);
 

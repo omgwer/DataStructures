@@ -7,7 +7,7 @@
 void addElement(List* list, Node* newNodeElement)
 {	
 	ListElement* newElement = new ListElement;
-	newElement->node = newNodeElement;
+	newElement->node = newNodeElement;	
 
 	if (isEmpty(list)) {				          // если список пустой, пишем в начало списка
 		newElement->next = nullptr;		

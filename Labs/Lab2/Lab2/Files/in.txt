@@ -1,11 +1,11 @@
 D
 .games
-..secomd
+..second
 ...second.txt
-..tests
+..test
 ...helpme
-...today.helps
-.test
+...data.jpg
+.programs
 ..bigdata
 ..data
 ...wow.exe

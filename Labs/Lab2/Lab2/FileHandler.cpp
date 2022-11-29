@@ -100,6 +100,7 @@ void recursivePrint(Node* node, std::ofstream* out, int deep) {
 		}		
 	}	
 	if (node->files != nullptr && !isEmpty(node->files->next)) {	  // if node has files -> print all files 
+		--deep;
 		ListElement* variableListElement = node->files->next;
 		while (!isEmpty(variableListElement)) {
 			printNode(variableListElement->node, out, ++deep);

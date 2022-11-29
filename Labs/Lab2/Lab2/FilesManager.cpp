@@ -22,7 +22,7 @@ FileManager* FileManager::readCommand()
 	std::string parameter;
 	std::cout << "  Write your command: ";
 	std::cin >> command;
-	if (command != "exit" && command != "save") {
+	if (command != "exit" && command != "save" && command != "paste") {
 		std::cin>> parameter;
 	}
 
@@ -137,6 +137,55 @@ FileManager* FileManager::readCommand()
 		writeFile(rootNode, outFilePath);
 		std::cout << "  Output file will be saved!!" << std::endl;
 	}
+	else if (command == "copy" || command == "cut") {
+		if (command == "cut") {
+			isCut = true;
+		}
+		else {
+			isCut = false;
+		}
+		if (isExist(variableNode->files, parameter)) {
+			buffer = getElement(variableNode->files, parameter);
+		}
+		else if (isExist(variableNode->folders, parameter)) {
+			buffer = getElement(variableNode->folders, parameter);
+		}
+		else {
+			std::cout << " File is not found!!!" << std::endl;
+		}
+	}
+	else if (command == "paste") {
+		if (variableNode->folders == nullptr) {
+			variableNode->folders = new List;
+		} 
+		if (variableNode->files == nullptr) {
+			variableNode->files = new List;
+		}
+		if (isCut) {
+			if (buffer->isFolder) {				
+				addElement(variableNode->folders, buffer);
+				Node* parentDeleteElement = buffer->parent;
+				deleteElement(parentDeleteElement->folders, buffer->name);
+				return this;
+			}
+			else {
+				addElement(variableNode->files, buffer);
+				Node* parentDeleteElement = buffer->parent;
+				deleteElement(parentDeleteElement->files, buffer->name);
+				return this;
+			}
+		}
+		else {
+			if (buffer->isFolder) {
+				addElement(variableNode->folders, buffer);
+				return this;
+			}
+			else {
+				addElement(variableNode->files, buffer);
+				return this;
+			}
+		}
+	}
 	else {
 		std::cout << "  Error in input command!" << std::endl;
 	}
@@ -155,6 +204,9 @@ FileManager* FileManager::drawHelp() {
 	std::cout << "    ed {directory name} {new directory name} : edit directory name" << std::endl;
 	std::cout << "    mf {file name}                           : make file" << std::endl;
 	std::cout << "    rf {file name}                           : remove file" << std::endl;	
+	std::cout << "    copy {element name}                      : copy element" << std::endl;	
+	std::cout << "    cut {element name}                       : copy element" << std::endl;	
+	std::cout << "    paste {element name}                     : copy element" << std::endl;	
 	std::cout << "    ef {file name} {new file name}           : edit file name" << std::endl;	
 	std::cout << "    save                                     : save input changes" << std::endl;	
 	std::cout << "    exit                                     : close this app" << std::endl;	
@@ -163,6 +215,12 @@ FileManager* FileManager::drawHelp() {
 }
 
 FileManager* FileManager::drawNode() {
+	if (buffer == nullptr) {
+		std::cout << "~~~~ Buffer is empty ~~~~~" << std::endl;
+	}
+	else {
+		std::cout << buffer->name << " is push to buffer " << std::endl;
+	}
 	printNode(variableNode);
 	std::cout << std::endl << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
 	return this;

@@ -9,10 +9,7 @@
 их переименовании, копировании, переносе и удалении.
 4) сохранение дерева в файле(13).
 */
-/*
-1) в текстовом файле расписываешь структуру формата:
-C
-*/
+
 
 #include <iostream>
 #include "List.h"
@@ -20,9 +17,8 @@ C
 #include "FileHandler.h"
 #include "FilesManager.h"
 
-std::string host = "E:\\Projects\\DataStructures\\Labs\\Lab2\\Lab2\\Files";
-std::string inFile = host + "\\in.txt";
-std::string outFile = host + "\\out.txt";
+std::string inFile = "Files\\in.txt";
+std::string outFile = "Files\\out.txt";
 
 int main() {	
 	FileManager* fileManager = new FileManager(inFile, outFile);

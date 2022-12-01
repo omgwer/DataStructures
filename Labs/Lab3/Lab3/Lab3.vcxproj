@@ -134,7 +134,7 @@
     <ClInclude Include="MaxWeightFinder.h" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="..\x64\Debug\in.txt" />
+    <Text Include="in.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -15,8 +15,8 @@ void printVector(vector<vector<int>>* test) {
 	for (int i = 1;i < matrix.size(); i++) {
 		cout << " ";
 		for (int j = 1; j < matrix.size(); j++) {
-			if (matrix[i][j] == INT16_MAX)
-				cout << " - ";
+			if (matrix[i][j] == INT32_MAX)
+				cout << " 0 ";
 			else
 			{
 				int test = matrix[i][j];
@@ -31,7 +31,6 @@ void printVector(vector<vector<int>>* test) {
 		cout << endl;
 	}
 }
-
 int searchMax() {
 	ifstream searchMax("in.txt");
 	int result = 0, max = 0;
@@ -51,7 +50,6 @@ int searchMax() {
 	searchMax.close();
 	return result + 1;
 }
-
 bool isfullCheck(vector<bool>* isVisited) {
 	for (int i = 1; i < isVisited->size(); i++)
 	{
@@ -109,14 +107,56 @@ int main() {
 							startPointX = i;
 							startPointY = j;
 						}
-					}
+					}										
 				}
 			}
 		}
-		newMatrixPrime[startPointX][startPointY] = iterableWeight;
-		newMatrixPrime[startPointY][startPointX] = iterableWeight;
-		testVector[startPointY] = true;
+		int newMatrixInputX = 0;
+		int newMatrixInputY = 0;
+		int newMatrixWeight = INT32_MAX;
+		bool needReplace = false;
+		for (int i = 1; i < matrixSize; i++) { // нужно поискать, есть ли возможность срезать угол
+			if (matrix[startPointY][i] != INT32_MAX && matrix[startPointX][i] != INT32_MAX) { // значит они указывают в одно место
+				if (matrix[startPointX][i] < newMatrixWeight) {
+					needReplace = true;
+					newMatrixWeight = matrix[startPointX][i];
+					newMatrixInputX = startPointX;
+					newMatrixInputY = i;
+				}
+			}
+		} 
+
+		if (needReplace) {  // если графы необходимо перепривязать
+			newMatrixPrime[newMatrixInputX][newMatrixInputY] = INT32_MAX; // удаляем старую привязку
+			newMatrixPrime[newMatrixInputY][newMatrixInputX] = INT32_MAX;
+
+			newMatrixPrime[newMatrixInputY][startPointY] = newMatrixWeight;  // делаем связь отвязанной вершины с новой вершиной
+			newMatrixPrime[startPointY][newMatrixInputY] = newMatrixWeight;
+
+			newMatrixPrime[startPointX][startPointY] = iterableWeight;  //добавляем новую вершину
+			newMatrixPrime[startPointY][startPointX] = iterableWeight;
+			testVector[startPointY] = true;
+		}
+		else {  // если не надо
+			newMatrixPrime[startPointX][startPointY] = iterableWeight;
+			newMatrixPrime[startPointY][startPointX] = iterableWeight;
+			testVector[startPointY] = true;
+		}		
 	}
+
+	printVector(&matrix);
+	cout << endl;
 	printVector(&newMatrixPrime);
+
+	int graphWeight = 0;
+	for (int i = 1; i < newMatrixPrime.size(); i++) {
+		for (int j = 1; j < newMatrixPrime.size(); j++) {
+			graphWeight += newMatrixPrime[i][j];
+		}
+	}
+	cout << endl << graphWeight / 2 << endl;
+	
+
+	
 	return 1;
 }

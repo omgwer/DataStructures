@@ -95,7 +95,6 @@ bool isfullCheck(vector<bool>* isVisited) {
 	return false;
 }
 
-
 int main() {
 	vector<vector<int>> matrix(searchMax(), vector<int>(searchMax(), INT16_MAX));
 	vector<bool> isVisited(searchMax(), false);
@@ -120,7 +119,7 @@ int main() {
 	int matrixSize = matrix.size();
 
 	while (isfullCheck(&isVisited)) {
-		int varInt = INT16_MAX;
+		int varInt = INT32_MAX;
 		int varCurrentPoint = currentPoint;
 		for (int i = 1; i < matrixSize; i++) { //пробегаемся и ищем следующий элемент
 			if (matrix[currentPoint][i] < varInt && isVisited[i] == false) { // новый элемент должен быть меньше всех и не быть пройденным
@@ -131,18 +130,18 @@ int main() {
 		currentPoint = varCurrentPoint;
 		isVisited[currentPoint] = true;
 		for (int i = 1; i < matrixSize; i++) { // обходим все соседние элементы и пересчитываем коэффициенты			
-			int test1 = matrix[startPoint][i] + matrix[currentPoint][i];
+			int test1 = matrix[startPoint][i];// +matrix[currentPoint][i];
 			int test2 = matrix[currentPoint][startPoint];
-			if (test1 < test2) {  //пытаемся уменьшить расстояние 
-				matrix[startPoint][currentPoint] = matrix[startPoint][i] + matrix[currentPoint][i];
-				matrix[currentPoint][startPoint] = matrix[startPoint][i] + matrix[currentPoint][i];
+			if (test1 < test2) {  //пытаемся уменьшить вес 
+				//matrix[startPoint][currentPoint] = matrix[startPoint][currentPoint];// matrix[startPoint][i] + matrix[currentPoint][i];
+				matrix[currentPoint][startPoint] = matrix[startPoint][currentPoint]; // matrix[startPoint][i] + matrix[currentPoint][i];
 			}
 		}
 	}
-	cout << "The distance between " << startPoint << " and " << finishPoint << " = " << matrix[startPoint][finishPoint] << endl;
+	cout << "The weight between " << startPoint << " and " << finishPoint << " = " << matrix[startPoint][finishPoint] << endl;
 	cout << endl;
 	printVector(&matrix);
 	cout << endl;
-	printReturnPath(startPoint, finishPoint, &matrix);
+	//printReturnPath(startPoint, finishPoint, &matrix);
 	return 1;
 }

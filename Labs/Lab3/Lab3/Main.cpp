@@ -8,8 +8,11 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include "Main.h"
 
 using namespace std;
+using std::cout;
+using std::cin;
 
 void printVector(vector<vector<int>>* test) {
 	vector<vector<int>> matrix = *test;
@@ -96,11 +99,12 @@ bool isfullCheck(vector<bool>* isVisited) {
 }
 
 int main() {
-	vector<vector<int>> matrix(searchMax(), vector<int>(searchMax(), INT16_MAX));
+	vector<vector<int>> matrix(searchMax(), vector<int>(searchMax(), -1));
 	vector<bool> isVisited(searchMax(), false);
-	int x = 0, y = 0, weight = 0, startPoint, finishPoint;
+	int startPoint, finishPoint;
 	ifstream in("in.txt");
 	if (in.is_open()) {
+		int x = 0, y = 0, weight = 0;
 		while (!in.eof()) {  //init array
 			in >> x >> y >> weight;
 			matrix[x][y] = weight;
@@ -117,31 +121,38 @@ int main() {
 	isVisited[startPoint] = true;	
 	int currentPoint = startPoint;
 	int matrixSize = matrix.size();
+	vector<int> result(matrixSize, -1);
+	result[startPoint] = INT32_MAX;
+	result[0] = 0;
 
 	while (isfullCheck(&isVisited)) {
-		int varInt = INT32_MAX;
-		int varCurrentPoint = currentPoint;
-		for (int i = 1; i < matrixSize; i++) { //пробегаемся и ищем следующий элемент
-			if (matrix[currentPoint][i] < varInt && isVisited[i] == false) { // новый элемент должен быть меньше всех и не быть пройденным
-				varInt = matrix[currentPoint][i];
-				varCurrentPoint = i;
-			}
+		for (int i = 1; i < matrixSize; i++) {
+			if (!isVisited[i] && matrix[currentPoint][i] > 0) {  //Пройденные вершины не смотрим
+				int first = min(result[currentPoint], matrix[currentPoint][i]);  // это минимальное значение ребра целиком
+				int test = max(first, result[i]);
+				result[i] = test;
+			}		
+		}
+		isVisited[currentPoint] = true;
+		// search new currentPoint
+		int varCurrentPoint = 0;
+		int varWeight = 0;
+		for (int i = 1; i < matrixSize; i++) {
+			if ( !isVisited[i] && result[i] > varWeight) {
+				varCurrentPoint = i;	
+				varWeight = result[i];
+			}				
 		}
 		currentPoint = varCurrentPoint;
-		isVisited[currentPoint] = true;
-		for (int i = 1; i < matrixSize; i++) { // обходим все соседние элементы и пересчитываем коэффициенты			
-			int test1 = matrix[startPoint][i];// +matrix[currentPoint][i];
-			int test2 = matrix[currentPoint][startPoint];
-			if (test1 < test2) {  //пытаемся уменьшить вес 
-				//matrix[startPoint][currentPoint] = matrix[startPoint][currentPoint];// matrix[startPoint][i] + matrix[currentPoint][i];
-				matrix[currentPoint][startPoint] = matrix[startPoint][currentPoint]; // matrix[startPoint][i] + matrix[currentPoint][i];
-			}
-		}
 	}
-	cout << "The weight between " << startPoint << " and " << finishPoint << " = " << matrix[startPoint][finishPoint] << endl;
+
+	for (int i = 1; i < matrixSize; i++) {
+		if (result[i] == INT32_MAX)
+			cout << "* ";
+		else
+			cout << result[i] << " ";
+	}
 	cout << endl;
-	printVector(&matrix);
-	cout << endl;
-	//printReturnPath(startPoint, finishPoint, &matrix);
+	cout << "The weight between " << startPoint << " and " << finishPoint << " = " << result[finishPoint] << endl;
 	return 1;
 }

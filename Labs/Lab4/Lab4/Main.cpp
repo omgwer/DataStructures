@@ -60,6 +60,16 @@ bool isfullCheck(vector<bool>* isVisited) {
 	return false;
 }
 
+int getPointWeight(vector<int>* test) {
+	int result = 0;
+	for (int i = 1; i < test->size(); i++) {
+		int test1 = test->at(i);
+		if (test1 != 0)
+			result++;		
+	}
+	return result;
+}
+
 int main() {
 	vector<vector<int>> matrix(searchMax(), vector<int>(searchMax(), INT32_MAX));
 	vector<vector<int>> newMatrixPrime(searchMax(), vector<int>(searchMax(), 0));
@@ -87,7 +97,7 @@ int main() {
 			}
 		}
 	}
-	newMatrixPrime[startPointX][startPointY] = iterableWeight;
+	newMatrixPrime[startPointX][startPointY] = iterableWeight;  // нашли минимальное ребро
 	newMatrixPrime[startPointY][startPointX] = iterableWeight;
 	vector<bool> testVector(matrix.size(), false);
 	testVector[0] = true;
@@ -115,17 +125,23 @@ int main() {
 		int newMatrixInputY = 0;
 		int newMatrixWeight = INT32_MAX;
 		bool needReplace = false;
+
 		for (int i = 1; i < matrixSize; i++) { // нужно поискать, есть ли возможность срезать угол
-			if (matrix[startPointY][i] != INT32_MAX && matrix[startPointX][i] != INT32_MAX) { // значит они указывают в одно место
+			int graphEdge1 = matrix[startPointX][i];
+			int graphEdge2 = matrix[startPointY][i];
+			bool graphEdge3 = newMatrixPrime[startPointX][i] != 0;  // проверяем, есть ли эти ребра на новом графе
+			bool graphEdge4 = matrix[startPointY][i] != INT32_MAX;	// проверяем, есть ли это ребро на старом графе
+			int test1= getPointWeight(&newMatrixPrime[startPointX]);
+			int test2= getPointWeight(&newMatrixPrime[startPointY]);
+			if (graphEdge1 != INT32_MAX && graphEdge2 != INT32_MAX && graphEdge3 && graphEdge4) { // значит они указывают в одно место
 				if (matrix[startPointX][i] < newMatrixWeight) {
 					needReplace = true;
-					newMatrixWeight = matrix[startPointX][i];
+					newMatrixWeight = matrix[startPointY][i];  // нужно положить ребро между концом нового 
 					newMatrixInputX = startPointX;
 					newMatrixInputY = i;
 				}
 			}
 		} 
-
 		if (needReplace) {  // если графы необходимо перепривязать
 			newMatrixPrime[newMatrixInputX][newMatrixInputY] = INT32_MAX; // удаляем старую привязку
 			newMatrixPrime[newMatrixInputY][newMatrixInputX] = INT32_MAX;

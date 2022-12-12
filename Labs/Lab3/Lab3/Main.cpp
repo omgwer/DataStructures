@@ -124,13 +124,16 @@ int main() {
 	vector<int> result(matrixSize, -1);
 	result[startPoint] = INT32_MAX;
 	result[0] = 0;
+	bool error = true;
 
-	while (isfullCheck(&isVisited)) {
+	while (isfullCheck(&isVisited) && error) {
+		error = false;
 		for (int i = 1; i < matrixSize; i++) {
 			if (!isVisited[i] && matrix[currentPoint][i] > 0) {  //Пройденные вершины не смотрим
 				int first = min(result[currentPoint], matrix[currentPoint][i]);  // это минимальное значение ребра целиком
 				int test = max(first, result[i]);
 				result[i] = test;
+				error = true;
 			}		
 		}
 		isVisited[currentPoint] = true;
@@ -145,14 +148,20 @@ int main() {
 		}
 		currentPoint = varCurrentPoint;
 	}
-
-	for (int i = 1; i < matrixSize; i++) {
-		if (result[i] == INT32_MAX)
-			cout << "* ";
-		else
-			cout << result[i] << " ";
+	
+	if (result[finishPoint] < 0) {
+		cout << "Error!!! Graph point not linked!!!" << endl;
 	}
-	cout << endl;
-	cout << "The weight between " << startPoint << " and " << finishPoint << " = " << result[finishPoint] << endl;
+	else {
+		for (int i = 1; i < matrixSize; i++) {
+			if (result[i] == INT32_MAX)
+				cout << "* ";
+			else
+				cout << result[i] << " ";
+		}
+		cout << endl;
+		cout << "The weight between " << startPoint << " and " << finishPoint << " = " << result[finishPoint] << endl;
+	}	
+	
 	return 1;
 }

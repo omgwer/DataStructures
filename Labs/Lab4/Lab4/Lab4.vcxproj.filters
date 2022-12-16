@@ -29,5 +29,8 @@
     <Text Include="out.txt">
       <Filter>Resource Files</Filter>
     </Text>
+    <Text Include="fullGraph.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
   </ItemGroup>
 </Project>

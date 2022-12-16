@@ -1,11 +1,19 @@
 ﻿//11. Реализовать   эвристический   алгоритм  решения  задачи
 //коммивояжера на основании метода  Прима  нахождения  остовного
 //дерева.Проиллюстрировать по шагам этапы поиска(11).
+// Граф полный
 
 #include <fstream>
 #include <iostream>
 #include <string>
 #include <vector>
+#include <cstdlib>
+#include <ctime>
+
+struct PrimeElement {
+	int weight;
+	int pointerTo;
+};
 
 using namespace std;
 
@@ -30,9 +38,10 @@ void printVector(vector<vector<int>>* test) {
 		}
 		cout << endl;
 	}
+	cout << endl;
 }
-int searchMax() {
-	ifstream searchMax("in.txt");
+int searchMax(std::string path) {
+	ifstream searchMax(path);
 	int result = 0, max = 0;
 	if (searchMax.is_open()) {
 		while (!searchMax.eof()) {
@@ -68,28 +77,65 @@ int getPointWeight(vector<int>* test) {
 	}
 	return result;
 }
-bool isPointOverload(vector<int>* test) {  // это значит, что у данной вершины уже есть два ребра
-	int result = 0;
-	for (int i = 1; i < test->size(); i++) {
-		int test1 = test->at(i);
-		if (test1 != 0)
-			result++;
-		if (result >= 2)
-			return true;		
+void generateFullGraph(int points) {
+	ofstream out("fullGraph.txt");
+	out.clear();
+	for (int j = 1; j <= points; j++) {
+		for (int i = 1; i <= points; i++) {
+			if (j < i) {
+				out << j << " " << i << " " << (rand() % 50 + 1);
+				if (j == (points - 1) && i == (points)) {
+					continue;
+				}
+				out << endl;
+			}			
+		}					
 	}	
-	return false;
 }
-bool isTriangle() {  // проверка получится ли треугольник, если добавить еще одно ребро.
-	return false;
+
+int getFinishPoint(vector<vector<int>>* array, int startPoint, int matrixSize) {
+	int varWeight = 0;
+	for (int i = 1; i < matrixSize; i++) {
+		if (i != startPoint) {
+			for (int j = 1; j < matrixSize; j++) {
+				if (array->at(i)[j] != 0) {
+					varWeight++;					
+				}
+			}
+			if (varWeight == 1) {
+				return i;
+			}
+			varWeight = 0;
+		}
+	}
+	return -1;
+}
+
+bool isCycleGraph(vector<vector<int>>* array,int matrixSize) {
+	int varWeight = 0;
+	bool result = true;
+	for (int i = 1; i < matrixSize; i++) {
+		for (int j = 1; j < matrixSize; j++) {
+			if (array->at(i)[j] != 0) {
+				varWeight++;
+			}			
+		}
+		if (varWeight == 1) {
+			return false;
+		}
+		varWeight = 0;
+	}
+	return result;
 }
 
 int main() {
-	vector<vector<int>> matrix(searchMax(), vector<int>(searchMax(), INT32_MAX));
-	vector<vector<int>> newMatrixPrime(searchMax(), vector<int>(searchMax(), 0));
-	vector<bool> isVisited(searchMax(), false);
-	int matrixSize = matrix.size();
-	isVisited[0] = true;
-	ifstream in("in.txt");
+	srand(time(NULL));
+	//generateFullGraph(500);
+	std::string path = "fullGraph.txt";
+	int matrixSize = searchMax(path);
+	vector<vector<int>> matrix(matrixSize, vector<int>(matrixSize, INT32_MAX));
+	vector<vector<int>> newMatrixPrime(matrixSize, vector<int>(matrixSize, 0));
+	ifstream in(path);
 	if (in.is_open()) {
 		int x = 0, y = 0, weight = 0;
 		while (!in.eof()) {  //init array
@@ -98,107 +144,70 @@ int main() {
 			matrix[y][x] = weight;
 		}
 	}
-	int startPointX = 0;
-	int startPointY = 0;
-	int iterableWeight = INT32_MAX;
+	
+	int startPoint = 1; // вершина откуда начинаем
+	int firstPoint = startPoint;
+	vector<bool> isVisited(matrixSize, false);  // массив с окончательными метками
+	vector<PrimeElement> primeArray(matrixSize, { INT32_MAX, INT32_MAX });  // массив временных меток
+	isVisited[0] = true;
+	primeArray[0] = {0, 0};
+	primeArray[startPoint] = {0 , 0};	
 	for (int i = 1; i < matrixSize; i++) {
-		for (int j = 1; j < matrixSize; j++) {
-			if (matrix[i][j] < iterableWeight) {
-				iterableWeight = matrix[i][j];
-				startPointX = i;
-				startPointY = j;
-			}
+		if (matrix[startPoint][i] < primeArray[i].weight) { // вес ребра меньше, чем тот, который записан
+			primeArray[i] = { matrix[startPoint][i], startPoint };
 		}
 	}
-	newMatrixPrime[startPointX][startPointY] = iterableWeight;  // нашли минимальное ребро
-	newMatrixPrime[startPointY][startPointX] = iterableWeight;
-	vector<bool> testVector(matrix.size(), false);
-	testVector[0] = true;
-	testVector[startPointX] = true;
-	testVector[startPointY] = true;
-	int lastPositionX =0;
-	int lastPositionY =0;
-	
-	while (isfullCheck(&testVector)) {
-		startPointX = 0;
-		startPointY = 0;
-		iterableWeight = INT32_MAX;
+	unsigned int start_time = clock();
+	while (isfullCheck(&isVisited)) {		
+		//находим самое маленькое ребро
+		int finishPoint = 0, weight = INT32_MAX;
 		for (int i = 1; i < matrixSize; i++) {
-			if (testVector[i]) {	// если входят анализируемые вершины графа
-				for (int j = 1; j < matrixSize; j++) {
-					if (!testVector[j]) { // если 2 вершины графа входят в остовной граф, их нет смысла рассматривать
-						if (matrix[i][j] < iterableWeight) {
-							iterableWeight = matrix[i][j];
-							startPointX = i;
-							startPointY = j;
-						}
-					}										
+			if (primeArray[i].weight < weight && primeArray[i].weight != 0 && !isVisited[i]) {  // вес ребра самый маленький
+				startPoint = primeArray[i].pointerTo;
+				finishPoint = i;
+				weight = primeArray[i].weight;
+			}
+		}
+		// добавляем новое ребро на граф		
+		bool needReplace = false;
+		int varFinish = 0, varWeight = INT_FAST32_MAX;
+		for (int i = 1; i < matrixSize; i++) {
+			if (newMatrixPrime[startPoint][i] != 0 && i != startPoint) {  // ищем самый кототкий
+				if (newMatrixPrime[startPoint][i] < varWeight) {
+					varWeight = newMatrixPrime[startPoint][i];
+					varFinish = i;
+					needReplace = true;
 				}
 			}
 		}
-		newMatrixPrime[startPointX][startPointY] = iterableWeight;
-		newMatrixPrime[startPointY][startPointX] = iterableWeight;
-		testVector[startPointY] = true;	
-		lastPositionX = startPointX;
-		lastPositionY = startPointY;
-	}
-	bool isClosed = false;
-	
-	while (!isClosed) {  // ищем две любые незамкнутые вершины, между которыми минимальное расстояние, если вершина одна, то вклиниваем ее куда нибудь.
-		isClosed = true;
-		int firstPoint = 0;
-		int secondPoint = 0;
-		int varWeight = INT32_MAX;
-		for (int i = 1; i < matrixSize; i++) {  // нужно замкнуть граф
-			for (int j = 1; j < matrixSize; j++) {
-				if (getPointWeight(&newMatrixPrime[i]) < 2 && getPointWeight(&newMatrixPrime[j]) < 2) { // есть две вершины, у которых меньше двух ребер
-					if (matrix[i][j] < varWeight ) {  // между ребрами есть связь и эта комбинация меньше, чем запомненная
-						isClosed = false;
-						firstPoint = i;
-						secondPoint = j;
-						varWeight = matrix[i][j];
-					}
-				}
-			}
-		}
-		if (firstPoint != 0) {  // значит нашлись две вершины, которые можно соединить
-			newMatrixPrime[firstPoint][secondPoint] = varWeight;
-			newMatrixPrime[secondPoint][firstPoint] = varWeight;
-		}
-		else {  // такая вершина одна. нужно ее подсунуть ближайшей вершине, чтобы вес минимально вырос
-			int replacementPoint = 0;
-			for (int i = 1; i < matrixSize; i++) {  // нужно замкнуть граф
-				if (getPointWeight(&newMatrixPrime[i]) < 2 ) { // нашлась хоть одна одинокая вершина  // тут не проверяется, есть лу у вершины вообще больше двух reber					
-					replacementPoint = i;
-					isClosed = false;
-					for (int j = 1; j < matrixSize; j++) {  // нужно найти треугольник наименьшего веса
-						for (int k = 1; k < matrixSize; k++) {
-							if (matrix[i][j] != INT32_MAX && matrix[i][k] != INT32_MAX && matrix[k][j] != INT32_MAX) {  // из одинокой вершины есть две вершины, связанные между собой 
-								int varRes = matrix[i][j] + matrix[i][k];   // сумма двух ребер, которые хотим добавить
-								if (varRes < varWeight ) {  // ищем минимальную сумму ребер
-									varWeight = varRes; 
-									firstPoint = k;
-									secondPoint = j;
-								}								
-							}
-						}
-					}
-					i = matrixSize;					
-				}
-			}
-			// нужно обновить связи в ребрах  ( если обрывается связь ставим 0)
-			newMatrixPrime[firstPoint][secondPoint] = 0;  // разрываем старую связь
-			newMatrixPrime[secondPoint][firstPoint] = 0;
-			newMatrixPrime[replacementPoint][firstPoint] = matrix[replacementPoint][firstPoint];  // добавляем первое ребро
-			newMatrixPrime[firstPoint][replacementPoint] = matrix[replacementPoint][firstPoint];
-			newMatrixPrime[replacementPoint][secondPoint] = matrix[replacementPoint][secondPoint];  // добавляем второе ребро
-			newMatrixPrime[secondPoint][replacementPoint] = matrix[replacementPoint][secondPoint];
-		}
-	}
 
-	printVector(&matrix);
-	cout << endl;
-	printVector(&newMatrixPrime);
+		//cout << "Add new graph edge - " << startPoint << " " << finishPoint << " weight = " << matrix[startPoint][finishPoint] << endl;
+		newMatrixPrime[startPoint][finishPoint] = matrix[startPoint][finishPoint];
+		newMatrixPrime[finishPoint][startPoint] = matrix[startPoint][finishPoint];
+		if (needReplace) {
+			//cout << "  Delete graph edge - " << startPoint << " " << varFinish << " weight = " << matrix[startPoint][varFinish] << endl;
+			//cout << "  Replace graph edge - " << finishPoint << " " << varFinish << " weight = " << matrix[finishPoint][varFinish] << endl;
+			newMatrixPrime[startPoint][varFinish] = 0;	// разрываем старую связь
+			newMatrixPrime[varFinish][startPoint] = 0;			
+			newMatrixPrime[finishPoint][varFinish] = matrix[finishPoint][varFinish]; // создаем новую связь
+			newMatrixPrime[varFinish][finishPoint] = matrix[finishPoint][varFinish];
+		}		
+		isVisited[startPoint] = true;
+		isVisited[finishPoint] = true;
+		startPoint = finishPoint;
+	}
+	// ищем вершину со степенью один для замыкания с началом
+	int finishPoint = getFinishPoint(&newMatrixPrime, firstPoint, matrixSize);
+	newMatrixPrime[firstPoint][finishPoint] = matrix[firstPoint][finishPoint];
+	newMatrixPrime[finishPoint][firstPoint] = matrix[firstPoint][finishPoint];
+
+	unsigned int end_time = clock();
+	unsigned int result = end_time - start_time;
+
+	cout << endl << "Algoritm run is " << result << endl;
+
+	//printVector(&matrix);
+	//printVector(&newMatrixPrime);
 
 	int graphWeight = 0;
 	for (int i = 1; i < newMatrixPrime.size(); i++) {
@@ -206,7 +215,7 @@ int main() {
 			graphWeight += newMatrixPrime[i][j];
 		}
 	}
-	cout << endl << graphWeight / 2 << endl;
+	cout << endl << "Graph weight  =  " << graphWeight / 2 << endl;
 
 	ofstream out("out.txt");
 	vector<bool> exportBool(matrixSize, false);
@@ -218,7 +227,15 @@ int main() {
 			}
 		}
 	}
-		
+	cout << endl;
+	if (isCycleGraph(&newMatrixPrime, matrixSize)) {
+		cout << "Graph is cycle " << endl;
+	}
+	else {
+		cout << "Error!!! Graph is NOT cycle !!! " << endl;
+	}
+	
+	
 	return 1;
 }
 

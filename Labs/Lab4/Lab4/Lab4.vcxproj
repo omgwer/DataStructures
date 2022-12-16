@@ -131,6 +131,7 @@
     <ClCompile Include="OldMain.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="fullGraph.txt" />
     <Text Include="in.txt" />
     <Text Include="out.txt" />
   </ItemGroup>

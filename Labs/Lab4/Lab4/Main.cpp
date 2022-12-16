@@ -9,6 +9,8 @@
 #include <vector>
 #include <cstdlib>
 #include <ctime>
+#include <chrono>
+#include <thread>
 
 struct PrimeElement {
 	int weight;
@@ -130,9 +132,12 @@ bool isCycleGraph(vector<vector<int>>* array,int matrixSize) {
 
 int main() {
 	srand(time(NULL));
-	//generateFullGraph(500);
+	int graphSize = 100;
+	generateFullGraph(graphSize);
 	std::string path = "fullGraph.txt";
-	int matrixSize = searchMax(path);
+	int matrixSize = graphSize + 1;
+	//int matrixSize = searchMax(path);
+	unsigned int programStartTime = clock();
 	vector<vector<int>> matrix(matrixSize, vector<int>(matrixSize, INT32_MAX));
 	vector<vector<int>> newMatrixPrime(matrixSize, vector<int>(matrixSize, 0));
 	ifstream in(path);
@@ -144,7 +149,6 @@ int main() {
 			matrix[y][x] = weight;
 		}
 	}
-	
 	int startPoint = 1; // вершина откуда начинаем
 	int firstPoint = startPoint;
 	vector<bool> isVisited(matrixSize, false);  // массив с окончательными метками
@@ -152,12 +156,13 @@ int main() {
 	isVisited[0] = true;
 	primeArray[0] = {0, 0};
 	primeArray[startPoint] = {0 , 0};	
+	unsigned int start_time = clock();
 	for (int i = 1; i < matrixSize; i++) {
 		if (matrix[startPoint][i] < primeArray[i].weight) { // вес ребра меньше, чем тот, который записан
 			primeArray[i] = { matrix[startPoint][i], startPoint };
 		}
-	}
-	unsigned int start_time = clock();
+	}	
+	int cycle = 0;	
 	while (isfullCheck(&isVisited)) {		
 		//находим самое маленькое ребро
 		int finishPoint = 0, weight = INT32_MAX;
@@ -195,6 +200,10 @@ int main() {
 		isVisited[startPoint] = true;
 		isVisited[finishPoint] = true;
 		startPoint = finishPoint;
+		cout << "\033[2J\033[1;1H";
+		cout << cycle << endl;
+		//std::this_thread::sleep_for(std::chrono::milliseconds(1));
+		cycle++;
 	}
 	// ищем вершину со степенью один для замыкания с началом
 	int finishPoint = getFinishPoint(&newMatrixPrime, firstPoint, matrixSize);
@@ -204,7 +213,7 @@ int main() {
 	unsigned int end_time = clock();
 	unsigned int result = end_time - start_time;
 
-	cout << endl << "Algoritm run is " << result << endl;
+	cout << endl << "Algorithm run is " << (float)result / 1000.f << " seconds" << endl;
 
 	//printVector(&matrix);
 	//printVector(&newMatrixPrime);
@@ -235,7 +244,8 @@ int main() {
 		cout << "Error!!! Graph is NOT cycle !!! " << endl;
 	}
 	
-	
+	unsigned int finishTime = clock() - programStartTime;
+	cout << endl << "Program run is " << (float)finishTime / 1000.f << " seconds" << endl;
 	return 1;
 }
 

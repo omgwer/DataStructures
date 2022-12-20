@@ -131,10 +131,13 @@ bool isCycleGraph(vector<vector<int>>* array,int matrixSize) {
 }
 
 int main() {
+	unsigned int graphGenerateStart = clock();
 	srand(time(NULL));
-	int graphSize = 100;
-	generateFullGraph(graphSize);
-	std::string path = "fullGraph.txt";
+	int graphSize = 6;
+	//generateFullGraph(graphSize);
+	std::cout << "Graph generated! for " << (float)(clock() -graphGenerateStart) / 1000.f << " seconds" << std::endl;
+	//std::string path = "fullGraph.txt";
+	std::string path = "in.txt";
 	int matrixSize = graphSize + 1;
 	//int matrixSize = searchMax(path);
 	unsigned int programStartTime = clock();
@@ -149,6 +152,7 @@ int main() {
 			matrix[y][x] = weight;
 		}
 	}
+	std::cout << "Array init! for " << (float)(clock() - graphGenerateStart) / 1000.f << " seconds" << std::endl;
 	int startPoint = 1; // вершина откуда начинаем
 	int firstPoint = startPoint;
 	vector<bool> isVisited(matrixSize, false);  // массив с окончательными метками
@@ -157,13 +161,18 @@ int main() {
 	primeArray[0] = {0, 0};
 	primeArray[startPoint] = {0 , 0};	
 	unsigned int start_time = clock();
-	for (int i = 1; i < matrixSize; i++) {
-		if (matrix[startPoint][i] < primeArray[i].weight) { // вес ребра меньше, чем тот, который записан
-			primeArray[i] = { matrix[startPoint][i], startPoint };
-		}
-	}	
+	
 	int cycle = 0;	
-	while (isfullCheck(&isVisited)) {		
+	std::cout << "Prime array init! for " << (float)(clock() - graphGenerateStart) / 1000.f << " seconds" << std::endl;
+	std::cout << "Press any key to continue...";
+	std::string kek = "0";
+	std::cin >> kek;
+	while (isfullCheck(&isVisited)) {	
+		for (int i = 1; i < matrixSize; i++) {
+			if (matrix[startPoint][i] < primeArray[i].weight) { // вес ребра меньше, чем тот, который записан
+				primeArray[i] = { matrix[startPoint][i], startPoint };
+			}
+		}
 		//находим самое маленькое ребро
 		int finishPoint = 0, weight = INT32_MAX;
 		for (int i = 1; i < matrixSize; i++) {
@@ -224,6 +233,32 @@ int main() {
 			graphWeight += newMatrixPrime[i][j];
 		}
 	}
+	std::cout << endl;
+	int iterable = 1, varInt = 1;
+	
+
+	vector<bool> exportBoolean(matrixSize, false);
+	exportBoolean[1] = true;
+	while (iterable < matrixSize ) {
+		for (int j = 1; j < matrixSize; j++) {
+			if (newMatrixPrime[varInt][j] != 0 && !exportBoolean[j]) {
+				std::cout << varInt << "(" << newMatrixPrime[varInt][j] << ")" << j << "->";
+				exportBoolean[j] = true;
+				varInt = j;
+				j = matrixSize;					
+			}
+		}
+		iterable++;
+	}
+	std::cout << varInt << "(" << newMatrixPrime[varInt][1] << ")" << 1 << std::endl;
+	
+
+	std::cout <<endl;
+	
+	
+
+
+
 	cout << endl << "Graph weight  =  " << graphWeight / 2 << endl;
 
 	ofstream out("out.txt");

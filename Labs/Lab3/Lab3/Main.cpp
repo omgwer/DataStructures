@@ -1,8 +1,8 @@
-//19. Имеется  сеть  автомобильных  дорог.Для каждой дороги
-//известна максимальная масса груза, которую можно  провезти  по
-//этой   дороге.С   помощью  алгоритма  Дейкстры   определить
-//максимальный   груз, который  можно  провести  между   двумя
-//указанными городам(10).
+//19. РРјРµРµС‚СЃСЏ  СЃРµС‚СЊ  Р°РІС‚РѕРјРѕР±РёР»СЊРЅС‹С…  РґРѕСЂРѕРі.Р”Р»СЏ РєР°Р¶РґРѕР№ РґРѕСЂРѕРіРё
+//РёР·РІРµСЃС‚РЅР° РјР°РєСЃРёРјР°Р»СЊРЅР°СЏ РјР°СЃСЃР° РіСЂСѓР·Р°, РєРѕС‚РѕСЂСѓСЋ РјРѕР¶РЅРѕ  РїСЂРѕРІРµР·С‚Рё  РїРѕ
+//СЌС‚РѕР№   РґРѕСЂРѕРіРµ.РЎ   РїРѕРјРѕС‰СЊСЋ  Р°Р»РіРѕСЂРёС‚РјР°  Р”РµР№РєСЃС‚СЂС‹   РѕРїСЂРµРґРµР»РёС‚СЊ
+//РјР°РєСЃРёРјР°Р»СЊРЅС‹Р№   РіСЂСѓР·, РєРѕС‚РѕСЂС‹Р№  РјРѕР¶РЅРѕ  РїСЂРѕРІРµСЃС‚Рё  РјРµР¶РґСѓ   РґРІСѓРјСЏ
+//СѓРєР°Р·Р°РЅРЅС‹РјРё РіРѕСЂРѕРґР°Рј(10).
 
 #include <fstream>
 #include <iostream>
@@ -40,7 +40,7 @@ void printVector(vector<vector<int>>* test) {
 void printReturnPath(int start, int finish, vector<vector<int>>* test) {
 	vector<vector<int>> matrix = *test;
 	vector<int> result;
-	int finishWeight = matrix[start][finish]; // конечный вес
+	int finishWeight = matrix[start][finish]; // РєРѕРЅРµС‡РЅС‹Р№ РІРµСЃ
 	int varPoint = finish;
 	matrix[start][start] = 0;
 	result.push_back(finish);
@@ -129,8 +129,8 @@ int main() {
 	while (isfullCheck(&isVisited) && error) {
 		error = false;
 		for (int i = 1; i < matrixSize; i++) {
-			if (!isVisited[i] && matrix[currentPoint][i] > 0) {  //Пройденные вершины не смотрим
-				int first = min(result[currentPoint], matrix[currentPoint][i]);  // это минимальное значение ребра целиком
+			if (!isVisited[i] && matrix[currentPoint][i] > 0) {  //РџСЂРѕР№РґРµРЅРЅС‹Рµ РІРµСЂС€РёРЅС‹ РЅРµ СЃРјРѕС‚СЂРёРј
+				int first = min(result[currentPoint], matrix[currentPoint][i]);  // СЌС‚Рѕ РјРёРЅРёРјР°Р»СЊРЅРѕРµ Р·РЅР°С‡РµРЅРёРµ СЂРµР±СЂР° С†РµР»РёРєРѕРј
 				int test = max(first, result[i]);
 				result[i] = test;
 				error = true;
